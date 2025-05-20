@@ -1,1 +1,64 @@
-create database Nhom10ModuleDiemDanh
+﻿create database Nhom10ModuleDiemDanh
+GO
+USE Nhom10ModuleDiemDanh;
+GO
+CREATE TABLE DiaDiem (
+    IdDiaDiem UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    TenDiaDiem NVARCHAR(100) NOT NULL,
+    ViDo FLOAT NULL,
+    KinhDo FLOAT NULL,
+    BanKinh FLOAT NULL,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    TrangThai BIT NOT NULL DEFAULT 1
+);
+go
+INSERT INTO DiaDiem (TenDiaDiem, ViDo, KinhDo, BanKinh)
+VALUES
+(N'Cơ sở Hà Nội', 21.0285, 105.8542, 500),
+(N'Cơ sở TP.HCM', 10.762622, 106.660172, 450),
+(N'Cơ sở Đà Nẵng', 16.047079, 108.20623, 400);
+
+GO
+CREATE TABLE CoSo (
+    IdCoSo UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    MaCoSo NVARCHAR(50) NOT NULL,
+    TenCoSo NVARCHAR(100) NOT NULL,
+    TrangThai BIT NOT NULL,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    IdCaHoc UNIQUEIDENTIFIER,
+    IdIP UNIQUEIDENTIFIER,
+    IdDiaDiem UNIQUEIDENTIFIER,
+
+    CONSTRAINT FK_CoSo_CaHoc FOREIGN KEY (IdCaHoc) REFERENCES CaHoc(IdCaHoc),
+    CONSTRAINT FK_CoSo_IP FOREIGN KEY (IdIP) REFERENCES IP(IdIP),
+    CONSTRAINT FK_CoSo_DiaDiem FOREIGN KEY (IdDiaDiem) REFERENCES DiaDiem(IdDiaDiem)
+);
+
+go
+
+INSERT INTO CoSo (MaCoSo, TenCoSo, TrangThai, IdCaHoc, IdIP, IdDiaDiem)
+VALUES
+(N'CS001', N'Cơ sở Hà Nội - Cầu Giấy', 1, NULL, NULL, NULL),
+(N'CS002', N'Cơ sở TP.HCM - Quận 1', 1, NULL, NULL, NULL),
+(N'CS003', N'Cơ sở Đà Nẵng - Hải Châu', 1, NULL, NULL, NULL);
+
+
+go
+CREATE TABLE HocKy (
+    IdHocKy UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    TenHocKy NVARCHAR(100) NOT NULL,
+    MaHocKy NVARCHAR(50) NOT NULL,
+    NgayBatDau DATE NOT NULL,
+    NgayKetThuc DATE NOT NULL,
+    TrangThai BIT NOT NULL DEFAULT 1,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL
+);
+go
+INSERT INTO HocKy (TenHocKy, MaHocKy, NgayBatDau, NgayKetThuc)
+VALUES
+(N'Học kỳ 1 - 2025', N'HK1-2025', '2025-01-05', '2025-05-15'),
+(N'Học kỳ 2 - 2025', N'HK2-2025', '2025-06-01', '2025-10-10'),
+(N'Học kỳ hè - 2025', N'HKH-2025', '2025-07-01', '2025-08-30');
