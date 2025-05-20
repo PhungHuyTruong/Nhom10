@@ -1,0 +1,62 @@
+-- Tạo CSDL
+CREATE DATABASE Nhom10ModuleDiemDanh;
+GO
+
+USE Nhom10ModuleDiemDanh;
+GO
+
+-- Bảng IP
+CREATE TABLE IP (
+    IdIP UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    KieuIP NVARCHAR(50) NOT NULL,
+    IP_DaiIP NVARCHAR(100) NOT NULL,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    TrangThai BIT NOT NULL DEFAULT 1
+);
+GO
+
+INSERT INTO IP (KieuIP, IP_DaiIP)
+VALUES
+(N'Giảng viên', N'192.168.1.1'),
+(N'Sinh viên', N'14.160.8.25'),
+(N'Ban đào tạo', N'15.160.8.25');
+GO
+
+-- Bảng VaiTro
+CREATE TABLE VaiTro (
+    IdVaiTro UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    TenVaiTro NVARCHAR(100) NOT NULL,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    TrangThai BIT NOT NULL DEFAULT 1
+);
+GO
+
+INSERT INTO VaiTro (TenVaiTro)
+VALUES
+(N'Ban đào tạo),
+(N'Giảng viên'),
+(N'Sinh viên');
+GO
+
+
+CREATE TABLE VaiTroNhanVien (
+    IdVaiTroNhanVien UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    IdVaiTro UNIQUEIDENTIFIER NULL,
+    IdNhanVien UNIQUEIDENTIFIER NULL,
+    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    TrangThai BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_VaiTroNhanVien_VaiTro FOREIGN KEY (IdVaiTro) REFERENCES VaiTro(IdVaiTro),
+    CONSTRAINT FK_VaiTroNhanVien_NhanVien FOREIGN KEY (IdNhanVien) REFERENCES NhanVien(IdNhanVien)
+);
+GO
+
+--Chưa có dữ liệu để viết vào nhé ---
+INSERT INTO VaiTroNhanVien (IdVaiTro, IdNhanVien)
+VALUES
+(NULL, NULL),
+(NULL, NULL);
+GO
