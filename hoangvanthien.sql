@@ -1,0 +1,65 @@
+﻿CREATE DATABASE Nhom10ModuleDiemDanh;
+GO
+
+USE Nhom10ModuleDiemDanh;
+GO
+
+-- Tạo bảng QuanLyBoMon
+CREATE TABLE QuanLyBoMon (
+    IDBoMon UNIQUEIDENTIFIER PRIMARY KEY,
+    MaBoMon NVARCHAR(50),
+    TenBoMon NVARCHAR(100),
+    CoSoHoatDong NVARCHAR(100),
+    NgayTao DATETIME,
+    NgayCapNhat DATETIME,
+    TrangThai INT
+);
+GO
+
+-- Tạo bảng BoMonCoSo
+CREATE TABLE BoMonCoSo (
+    IdBoMonCoSo UNIQUEIDENTIFIER PRIMARY KEY,
+    IDBoMon UNIQUEIDENTIFIER,
+    IdCoSo UNIQUEIDENTIFIER,
+    TrangThai INT,
+    FOREIGN KEY (IDBoMon) REFERENCES QuanLyBoMon(IDBoMon)
+);
+GO
+
+-- Tạo bảng BanDaoTao
+CREATE TABLE BanDaoTao (
+    IdBDT UNIQUEIDENTIFIER PRIMARY KEY,
+    MaBanDaoTao NVARCHAR(50),
+    TenBanDaoTao NVARCHAR(100),
+    Email NVARCHAR(100),
+    IdVaiTro UNIQUEIDENTIFIER,
+    TrangThai INT,
+    NgayTao DATETIME,
+    NgayCapNhat DATETIME
+);
+GO
+
+-- Thêm dữ liệu vào QuanLyBoMon 
+INSERT INTO QuanLyBoMon (IDBoMon, MaBoMon, TenBoMon, CoSoHoatDong, NgayTao, NgayCapNhat, TrangThai)
+VALUES 
+('11111111-1111-1111-1111-111111111111', 'C#', N'Lập trình với ngôn ngữ C#', N'Hà Nội', GETDATE(), GETDATE(), 1),
+('22222222-2222-2222-2222-222222222222', 'JAVA', N'Lập trình với ngôn ngữ JAVA', N'Hồ Chí Minh', GETDATE(), GETDATE(), 1);
+GO
+
+-- Thêm dữ liệu vào BoMonCoSo 
+INSERT INTO BoMonCoSo (IdBoMonCoSo, IDBoMon, IdCoSo, TrangThai)
+VALUES 
+(NEWID(), '11111111-1111-1111-1111-111111111111', '00000000-0000-0000-0000-000000000001', 1),
+(NEWID(), '22222222-2222-2222-2222-222222222222', '00000000-0000-0000-0000-000000000002', 1);
+GO
+
+-- Thêm dữ liệu vào BanDaoTao 
+INSERT INTO BanDaoTao (IdBDT, MaBanDaoTao, TenBanDaoTao, Email, IdVaiTro, TrangThai, NgayTao, NgayCapNhat)
+VALUES 
+('33333333-3333-3333-3333-333333333333', 'MaBDT_01', N'Nguyễn Văn A', 'a@fpt.edu.vn', '00000000-0000-0000-0000-000000000003', 1, GETDATE(), GETDATE()),
+('44444444-4444-4444-4444-444444444444', 'MaBDT_02', N'Nguyễn Văn B', 'b@gmail.com', '00000000-0000-0000-0000-000000000004', 1, GETDATE(), GETDATE());
+GO
+
+SELECT * FROM QuanLyBoMon;  
+SELECT * FROM BoMonCoSo;   
+SELECT * FROM BanDaoTao;
