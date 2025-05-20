@@ -35,7 +35,7 @@ GO
 
 INSERT INTO VaiTro (TenVaiTro)
 VALUES
-(N'Ban đào tạo),
+(N'Ban đào tạo'),
 (N'Giảng viên'),
 (N'Sinh viên');
 GO
